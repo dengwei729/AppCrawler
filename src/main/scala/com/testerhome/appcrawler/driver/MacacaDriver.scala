@@ -259,6 +259,9 @@ class MacacaDriver extends CommonLog with WebBrowser with WebDriver{
   }
 
   override def getPageSource(): String = {
+    currentPageSource = ""
+    currentPageDom = null
+
     //获取页面结构, 最多重试3次
     1 to 3 foreach (i => {
       asyncTask(20)(driver.source()) match {
@@ -268,7 +271,9 @@ class MacacaDriver extends CommonLog with WebBrowser with WebDriver{
           val xmlStr=v match {
             case json if json.trim.charAt(0)=='{' => {
               log.info("json format maybe from wda")
-              DataObject.fromJson[Map[String, String]](v).getOrElse("value", "")
+              // 支持macaca最新版本
+//              DataObject.fromJson[Map[String, String]](v).getOrElse("value", "")
+              json
             }
             case xml if xml.trim.charAt(0)=='<' =>{
               log.info("xml format ")

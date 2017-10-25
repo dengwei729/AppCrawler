@@ -3,12 +3,12 @@ package com.testerhome.appcrawler.plugin
 import java.io.File
 
 import com.brsanthu.googleanalytics.GoogleAnalytics
+
 import com.testerhome.appcrawler.URIElement
 import com.testerhome.appcrawler.Plugin
 import net.lightbody.bmp.BrowserMobProxyServer
 import net.lightbody.bmp.proxy.CaptureType
 import org.apache.log4j.{BasicConfigurator, Level, Logger}
-
 import scala.util.Try
 
 /**

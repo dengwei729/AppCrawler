@@ -1,0 +1,164 @@
+---
+# 插件列表
+pluginList:
+- "com.testerhome.appcrawler.plugin.TagLimitPlugin"
+# - "com.testerhome.appcrawler.plugin.ProxyPlugin"
+logLevel: "DEBUG"
+# 是否截图
+saveScreen: true
+showCancel: true
+reportTitle: AppCrawler高德地图试用
+# 截图超时时间
+screenshotTimeout: 20
+
+
+# 当前driver
+currentDriver: "ios"
+maxTime: 10800
+# 日志保存路径
+resultDir: "amap_report_ios"
+# driver启动时所需参数
+capability: 
+  newCommandTimeout: 10000
+  launchTimeout: 120000
+  automationName: "appium"
+  platformVersion: "11.0.3"
+  app: ""
+  deviceName: "48f8f7fe"
+  platformVersion: ""
+  appium: "http://127.0.0.1:4723/wd/hub"
+  autoWebview: false
+  autoLaunch: true
+  noReset: true
+  fullReset: false
+  resetKeyboard: true
+  
+androidCapability:
+  appActivity: "com.autonavi.map.activity.SplashActivity"
+  waitAppActivity: ".UserGuideActivity"
+  appPackage: "com.autonavi.minimap"
+iosCapability:
+  platformName: "iOS"
+  bundleId: "com.autonavi.amaptestmonkey"
+  udid: "00e630def672da63ed0bae762c3d78aebb67ea8d"
+  autoAcceptAlerts: "true"
+  platformVersion: "10.2"
+  deviceName: "iPhone 6"
+
+defineUrl:
+# 客户端暂时将当前页面的第一个非空Text作为页面唯一标识
+- //*[contains(name(), 'Text') and string-length(@value)>0 and string-length(@value)<20 and @visible="true"]/@value
+- //*[contains(name(), 'Button') and string-length(@name)>0 and @visible="true"]/@name
+
+baseUrl:
+- ".*MainActivity"
+- ".*SNBHomeView.*"
+
+# 最大遍历深度
+maxDepth: 20
+headFirst: true
+enterWebView: true
+
+# 用于启动时候自定义一些划屏或者刷新的动作.
+startupActions: 
+- driver.swipe("left")
+
+# 控件唯一性
+xpathAttributes:
+- "name"
+- "label"
+- "value"
+- "resource-id"
+- "content-desc"
+- "index"
+- "text"
+- 'visible'
+
+appWhiteList: []
+
+
+
+# url黑名单.用于排除某些页面
+urlBlackList: []
+# url白名单.
+urlWhiteList: []
+defaultBackAction: 
+  - //*[contains(@content-desc, '返回')]
+
+# 后退按钮标记, 主要用于iOS
+backButton: #（发现高德地图，有很多不同类型的back 按钮）
+# 大框搜索框页面
+# - //*[contains(@name, 'default_common_navibar_prev_normal') and @visible="true"]
+# # 路线规划搜索页面
+# - //*[contains(@name, 'default_icon_a15_normal') and @visible="true"]
+# - //*[contains(@name, 'close') and @visible="true"]
+# - //*[contains(@name, 'delete') and @visible="true"]
+# - //*[contains(@name, 'nearby_back') and @visible="true"]
+# - //*[contains(@name, 'default_icon_a1_normal') and @visible="true"]
+# - //*[contains(@name, 'navibar prev no') and @visible="true"]
+# Android
+- //*[contains(@content-desc, '返回')]
+
+ 
+blackList:
+# iOS 暂时先不考虑输入框的情况，有输入框比较坑
+ - //*[contains(name(), 'TextField')]
+ - //*[contains(name(), 'EditText')]
+ - "//*[contains(name(), 'StatusBar')]//*"
+ # 动态UI页面暂时先过滤掉
+ - "//*[contains(name(), 'AJXContainerView')]//*"
+
+# 设置这个跳过遍历
+autoCrawl: true
+
+# 适用于在一些列表页或者tab页中精确的控制点击顺序
+selectedList:
+#android
+- //*[@clickable="true"]
+#ios
+# - //*[contains(name(), 'Text') and string-length(@value)>0 and string-length(@value)<20 and @visible="true" ]
+# - //*[contains(name(), 'Button') and @visible="true"]
+# - //*[contains(name(), 'Image') and @visible="true"]
+# - //*[contains(name(), 'CheckBox') and @visible="true"]
+firstList: 
+- "//*[contains(name(), 'Popover')]//*"
+- "//*[contains(name(), 'Window')][3]//*"
+- "//*[contains(name(), 'Window')][2]//*"
+lastList: 
+# 路线页面出行方式
+- //*[contains(name(),'ScrollView')]//*
+tagLimitMax: 2
+tagLimit: []
+
+
+
+# 断言
+asserts: []
+
+# 测试用例入口
+# testcase: []
+  # name: "TesterHome AppCrawler"
+  # steps:
+  # - given: null
+  #   when: null
+  #   then: null
+  #   xpath: "//*"
+  #   action: driver.swipe("left")
+
+
+# 自定义action动作
+beforeElementAction: []
+triggerActions: []
+  # - action: "北京天安门"
+  #   xpath: //*[@value='请输入起点' and @visible="true"]
+  # - action: "首开广场"
+    # xpath: //*[@value='请输入重点' and @visible="true"]
+# - xpath: //*[contains(name(), 'TextField') and @visible="true" and @value="搜索"]
+#   action: "水立方"
+#   pri: 0
+  
+afterElementAction: []
+afterUrlFinished: []
+
+monkeyEvents: []
+monkeyRunTimeSeconds: 30

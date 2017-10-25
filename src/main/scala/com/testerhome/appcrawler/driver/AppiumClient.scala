@@ -298,8 +298,8 @@ class AppiumClient extends CommonLog with WebBrowser with WebDriver{
   }
 
   override def getPageSource(): String = {
-    currentPageSource=null
-    currentPageDom=null
+    currentPageSource = ""
+    currentPageDom = null
     //获取页面结构, 最多重试3次
     1 to 3 foreach (i => {
       asyncTask(20)(driver.getPageSource) match {
@@ -391,15 +391,25 @@ class AppiumClient extends CommonLog with WebBrowser with WebDriver{
           case len if len == 1 => {
             log.info("find by xpath success")
             currentElement=arr.head.asInstanceOf[WebElement]
-            return true
+
+            // 判断元素是否可见
+            if ( arr.head.asInstanceOf[WebElement].isDisplayed() ) {
+              return true
+            }
+
           }
           case len if len > 1 => {
             log.warn(s"find count ${v.size()}, you should check your dom file")
             //有些公司可能存在重名id
             arr.foreach(log.info)
             log.warn("just use the first one")
-            currentElement=arr.head.asInstanceOf[WebElement]
-            return true
+
+            // 判断元素是否可见
+            if ( arr.head.asInstanceOf[WebElement].isDisplayed() ) {
+              return true
+            }
+//            currentElement=arr.head.asInstanceOf[WebElement]
+//            return true
           }
           case len if len == 0 => {
             log.warn("find by xpath error no element found")

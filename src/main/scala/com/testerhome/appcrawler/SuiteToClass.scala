@@ -22,8 +22,12 @@ object SuiteToClass extends CommonLog {
       case Success(classNew) => {
         classNew.setSuperclass(pool.get(superClassName))
         val init = new CtConstructor(null, classNew)
+        // 处理" 有问题
+//        val body = fields.map(field => {
+//          s"${field._1}_$$eq(${'"' + field._2.toString.replace("\"", "\\\"").replace("\\", "\\\\") + '"'}); "
+//        }).mkString("\n")
         val body = fields.map(field => {
-          s"${field._1}_$$eq(${'"' + field._2.toString.replace("\"", "\\\"").replace("\\", "\\\\") + '"'}); "
+          s"${field._1}_$$eq(${'"' + field._2.toString.replace("\"", "\'") + '"'}); "
         }).mkString("\n")
         init.setBody(s"{ ${body}\naddTestCase(); }")
         classNew.addConstructor(init)

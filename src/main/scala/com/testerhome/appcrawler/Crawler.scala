@@ -34,6 +34,9 @@ class Crawler extends CommonLog {
   /** 元素的默认操作 */
   private var currentElementAction = "click"
 
+  /**
+    * 当前应用名称
+    */
   var appName = ""
   /** 当前的url路径 */
   var currentUrl = ""
@@ -826,6 +829,8 @@ class Crawler extends CommonLog {
     * @return
     */
   def getActionFromNormalActions(element: URIElement): String = {
+
+    // 获取优先遍历的元素
     val normalActions = conf.triggerActions.filter(_.getOrElse("pri", 1).toString.toInt == 0)
     log.info(s"normal actions size = ${normalActions.size}")
     normalActions.toStream.map(r => {
@@ -967,6 +972,7 @@ class Crawler extends CommonLog {
 
     action match {
       case "" => {
+
         log.info("just recored")
       }
       case "back" => {

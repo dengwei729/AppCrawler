@@ -49,6 +49,7 @@ trait DataObject {
     val mapper = new ObjectMapper()
     mapper.registerModule(DefaultScalaModule)
     mapper.readValue(str, classTag[T].runtimeClass.asInstanceOf[Class[T]])
+
   }
 
   def fromXML(str: String): Map[String, Any] = {
