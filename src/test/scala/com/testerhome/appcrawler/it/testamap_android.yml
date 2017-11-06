@@ -48,6 +48,7 @@ iosCapability:
   platformVersion: "10.2"
   deviceName: "iPhone 6"
 
+# 定义url关键字
 defineUrl:
 # ios
 # 
@@ -56,12 +57,13 @@ defineUrl:
 - //*[contains(name(), 'Text') and string-length(@text)>0 and string-length(@text)<20]/@text
 - //*[@clickable="true" and string-length(@content-desc)>0]/@content-desc
 
+# 基准url
 baseUrl:
 - ".*MainActivity"
 - ".*SNBHomeView.*"
 
 # 最大遍历深度
-maxDepth: 20
+maxDepth: 3
 headFirst: true
 enterWebView: true
 
@@ -87,29 +89,22 @@ appWhiteList: []
 # url黑名单.用于排除某些页面
 urlBlackList:
 # 过滤掉资料编辑页
-- com.autonavi.minimap-NewMapActivity-个人资料-返回
+- ".*个人资料.*"
 # 过滤掉拍照页面
-- com.autonavi.minimap-CameraActivity-重拍
-- com.autonavi.minimap-CameraActivity
+- ".*CameraActivity.*"
+# 账号登录页面
+- ".*账号登录.*"
 
-# url白名单.
+# url白名单, 第一次进入了白名单的范围, 就始终在白名单中. 不然就算不在白名单中也得遍历.
 urlWhiteList: []
 defaultBackAction: 
 - //*[contains(@content-desc, '返回')]
 
 # 后退按钮标记, 主要用于iOS
-backButton: #（发现高德地图，有很多不同类型的back 按钮）
-# 大框搜索框页面
-# - //*[contains(@name, 'default_common_navibar_prev_normal') and @visible="true"]
-# # 路线规划搜索页面
-# - //*[contains(@name, 'default_icon_a15_normal') and @visible="true"]
-# - //*[contains(@name, 'close') and @visible="true"]
-# - //*[contains(@name, 'delete') and @visible="true"]
-# - //*[contains(@name, 'nearby_back') and @visible="true"]
-# - //*[contains(@name, 'default_icon_a1_normal') and @visible="true"]
-# - //*[contains(@name, 'navibar prev no') and @visible="true"]
-# Android
+backButton:
+# 普通页面back按按
 - //*[contains(@content-desc, '返回')]
+# 动态UIback 按钮
 
  
 blackList:
@@ -119,20 +114,27 @@ blackList:
 - //*[contains(@text, '城市切换')]
 - //*[contains(@text, '当前城市')]
 # 不操作webview
-- //*[contains(name(), 'android.webkit.WebView')]
+- //*[contains(name(), 'android.webkit.WebView')]//*
+# 不进入语音搜页面
+- //*[@content-desc="语音输入"]
+
 
 # 设置这个跳过遍历
 autoCrawl: true
 
 # 适用于在一些列表页或者tab页中精确的控制点击顺序
 selectedList:
-- //*[@clickable="true"]
+#- //*[@clickable="true"]
+- //*[contains(name(), 'Text') and string-length(@value)>0 and string-length(@value)<20 ]
+- //*[contains(name(), 'Button')]
+- //*[contains(name(), 'Image')]
+- //*[contains(name(), 'CheckBox')]
 firstList:
 - //*[@text="路线"]
 - "//*[contains(name(), 'Popover')]//*"
 - "//*[contains(name(), 'Window')][3]//*"
 - "//*[contains(name(), 'Window')][2]//*"
-lastList: 
+lastList:
 # 路线页面出行方式
 - //*[contains(name(),'ScrollView')]//*
 tagLimitMax: 2

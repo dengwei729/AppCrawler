@@ -111,6 +111,10 @@ public class IOSTest {
             System.out.println("isVisible: " + elements.get(i).isDisplayed());
             System.out.println("isEnabled: " + elements.get(i).isEnabled());
         }
+
+
+        driver.get("amapuri://health/ride");
+        Thread.sleep(10000);
     }
 
 }

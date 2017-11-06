@@ -32,7 +32,7 @@ public class AndroidTest {
                     "An appium server node is not started!");
         }
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("deviceName","48f8f7fe");
+        capabilities.setCapability("deviceName","5LM7N16112003808");
 //        capabilities.setCapability("app", "/Users/dengwei/Documents/amap-client/crawler/amap_8.2.0.1051_internal_Autonavi_signed_201710161350_ae4ab27f424c8eafb94b8877dd75e97af3e7775f_master.apk");
         capabilities.setCapability("appPackage", "com.autonavi.minimap");
         capabilities.setCapability("platformName", "Android");
@@ -68,5 +68,10 @@ public class AndroidTest {
             System.out.println("isEnabled: " + elements.get(i).isEnabled());
             System.out.println("isSelected: " + elements.get(i).isSelected());
         }
+
+        driver.get("amapuri://drive/settings");
+
+
+        Thread.sleep(10000);
     }
 }

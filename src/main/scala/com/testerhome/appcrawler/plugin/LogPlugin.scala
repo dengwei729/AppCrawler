@@ -18,18 +18,18 @@ class LogPlugin extends Plugin {
   val driver = getCrawler().driver.asInstanceOf[AppiumClient].driver
 
   override def afterElementAction(element: URIElement): Unit = {
-    //第一次先试验可用的log 后续就可以跳过从而加速
-    if (logs.isEmpty) {
-      driver.manage().logs().getAvailableLogTypes.toArray().foreach(logName => {
-        log.info(s"read log=${logName.toString}")
-        try {
-          saveLog(logName.toString)
-          logs += logName.toString
-        } catch {
-          case ex: Exception => log.warn(s"log=${logName.toString} not exist")
-        }
-      })
-    }
+      //第一次先试验可用的log 后续就可以跳过从而加速
+      if (logs.isEmpty) {
+        driver.manage().logs().getAvailableLogTypes.toArray().foreach(logName => {
+          log.info(s"read log=${logName.toString}")
+          try {
+            saveLog(logName.toString)
+            logs += logName.toString
+          } catch {
+            case ex: Exception => log.warn(s"log=${logName.toString} not exist")
+          }
+        })
+      }
     if(getCrawler().getElementAction()!="skip") {
       logs.foreach(log => {
         saveLog(log)
